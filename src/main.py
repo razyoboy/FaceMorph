@@ -37,7 +37,7 @@ def main(predictor_path, filename1, filename2, alpha, include_borders, export_im
 
         t1 = [points1[x], points1[y], points1[z]]
         t2 = [points2[x], points2[y], points2[z]]
-        t = [ points[x], points[y], points[z] ]
+        t = [points[x], points[y], points[z]]
 
         # Morph one triangle at a time.
         morph_triangle(img1, img2, img_morph, t1, t2, t, alpha)
@@ -56,7 +56,7 @@ def main(predictor_path, filename1, filename2, alpha, include_borders, export_im
 
 if __name__ == '__main__' :
     predictor_path = 'model/shape_predictor_68_face_landmarks.dat'
-    filename1 = 'img/donald_trump.jpg'
+    filename1 = 'img/ted_cruz.jpg'
     filename2 = 'img/hillary_clinton.jpg'
     alpha = 0.5
     include_borders = True
