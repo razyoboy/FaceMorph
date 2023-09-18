@@ -4,11 +4,12 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
+from itertools import combinations
 from scipy.spatial import Delaunay
 from face_landmark_detection import facial_landmarks_detector
 from face_morph import morph_triangle
 
-def main(predictor_path, filename1, filename2, alpha, include_borders, export_image):
+def main(predictor_path, filename1, filename2, alpha, include_borders, export_image, display_results = True):
     # Read images
     img1 = cv2.imread(filename1)
     img2 = cv2.imread(filename2)
@@ -42,9 +43,9 @@ def main(predictor_path, filename1, filename2, alpha, include_borders, export_im
         # Morph one triangle at a time.
         morph_triangle(img1, img2, img_morph, t1, t2, t, alpha)
 
-    # Display Result
-    plt.imshow(cv2.cvtColor(np.uint8(img_morph), cv2.COLOR_BGR2RGB))
-    plt.axis('off')  # No axes for this plot
+    if display_results:
+        plt.imshow(cv2.cvtColor(np.uint8(img_morph), cv2.COLOR_BGR2RGB))
+        plt.axis('off')  # No axes for this plot
 
     if export_image:
         filename1_without_ext = os.path.splitext(os.path.basename(filename1))[0]
@@ -54,12 +55,22 @@ def main(predictor_path, filename1, filename2, alpha, include_borders, export_im
 
     plt.show()
 
-if __name__ == '__main__' :
+if __name__ == '__main__':
     predictor_path = 'model/shape_predictor_68_face_landmarks.dat'
-    filename1 = 'img/ted_cruz.jpg'
-    filename2 = 'img/hillary_clinton.jpg'
+    filename1 = 'img/donald_trump.jpg'
+    filename2 = 'img/ted_cruz.jpg'
     alpha = 0.5
     include_borders = True
-    export_image = False
+    export_image = True
+    display_results = False
 
-    main(predictor_path, filename1, filename2, alpha, include_borders, export_image)
+    BATCH_MORPH = True
+    folder_path = 'img/Male'
+
+    if BATCH_MORPH:
+        files = [os.path.join(folder_path, f) for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))]
+
+        for f1, f2 in combinations(files, 2):
+            main(predictor_path, f1, f2, alpha, include_borders, export_image, display_results)
+    else:
+        main(predictor_path, filename1, filename2, alpha, include_borders, export_image)

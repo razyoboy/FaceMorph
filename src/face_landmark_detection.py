@@ -1,7 +1,5 @@
-﻿import os
-import dlib
+﻿import dlib
 import numpy as np
-
 
 def facial_landmarks_detector(predictor_path: str, picture: str, include_borders: bool):
     detector = dlib.get_frontal_face_detector()
