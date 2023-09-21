@@ -1,17 +1,14 @@
-﻿import dlib
+﻿import cv2
+import dlib
 import numpy as np
 
-def facial_landmarks_detector(predictor_path: str, picture: str, include_borders: bool):
+def facial_landmarks_detector(predictor_path: str, img: cv2.Mat, include_borders: bool):
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor(predictor_path)
-
-    print("Processing file: {}".format(picture))
-    img = dlib.load_rgb_image(picture)
-
+    
     height, width, _ = img.shape
-
     detectors = detector(img, 1)
-    print("Number of faces detected: {}".format(len(detectors)))
+
     for k, d in enumerate(detectors):
         shape = predictor(img, d)
         points = np.zeros((68, 2), dtype=np.int32)
