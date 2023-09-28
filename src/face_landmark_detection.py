@@ -2,10 +2,11 @@
 import dlib
 import numpy as np
 
+
 def facial_landmarks_detector(predictor_path: str, img: cv2.Mat, include_borders: bool):
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor(predictor_path)
-    
+
     height, width, _ = img.shape
     detectors = detector(img, 1)
 
@@ -34,7 +35,6 @@ def facial_landmarks_detector(predictor_path: str, img: cv2.Mat, include_borders
 
 
 if __name__ == "__main__":
-
     faces = [
         'img/donald_trump.jpg',
         'img/hillary_clinton.jpg'
@@ -44,9 +44,11 @@ if __name__ == "__main__":
     res = facial_landmarks_detector(predictor_path, faces[1], True)
 
     from scipy.spatial import Delaunay
+
     tri = Delaunay(res)
 
     import matplotlib.pyplot as plt
-    plt.triplot(res[:,0], res[:,1], tri.simplices)
-    plt.plot(res[:,0], res[:,1], 'o')
+
+    plt.triplot(res[:, 0], res[:, 1], tri.simplices)
+    plt.plot(res[:, 0], res[:, 1], 'o')
     plt.show()
