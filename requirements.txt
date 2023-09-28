@@ -1,6 +1,8 @@
-dlib
+dlib~=19.24.2
 matplotlib==3.8.0
-numpy
+numpy~=1.25.2
 opencv-python==4.8.0.76
 Pillow==10.0.0
 scipy==1.11.2
+flask~=2.3.3
+waitress~=2.1.2
